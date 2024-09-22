@@ -2,6 +2,7 @@ import { useState } from "react";
 import Products from "./components/products";
 import Recide from "./components/recide";
 import Component from "./components/modal";
+
 function App() {
   const [counter, setCounter] = useState({});
   const [click, setClick] = useState([]);
@@ -11,33 +12,31 @@ function App() {
   const [openModal, setOpenModal] = useState(false);
   const [close, setClose] = useState([]);
 
-  const handelclose = (id) => {
+  const handleClose = (id) => {
     setClose((prev) => [...prev, id]);
   };
 
-  const handelRecide = (item) => {
+  const handleRecide = (item) => {
     setGotoR((prev) => [...prev, item]);
   };
-  const handelRecideprice = (item) => {
+
+  const handleRecidePrice = (item) => {
     setPrice((prev) => [...prev, item]);
   };
 
-  const handelclick = (id) => {
+  const handleClick = (id) => {
     setClick((prev) => [...prev, id]);
-    if (!counter[id]) {
-      setCounter((prev) => ({ ...prev, [id]: 1 }));
-    }
-    setItems(items + 1);
-    handelRecide();
-    handelRecideprice();
+    setCounter((prev) => ({ ...prev, [id]: (prev[id] || 0) + 1 }));
+    setItems((prev) => prev + 1);
   };
-  const handelmodal = () => {
+
+  const handleModal = () => {
     setOpenModal(true);
   };
 
   return (
     <div className="bg-amber-50">
-      {openModal === true && (
+      {openModal && (
         <Component
           openModal={openModal}
           setOpenModal={setOpenModal}
@@ -46,35 +45,32 @@ function App() {
           gotoR={gotoR}
           price={price}
           close={close}
-          handelclose={handelclose}
+          handleClose={handleClose}
         />
       )}
-      <div className="max-w-sm lg:max-w-7xl m-auto ">
-        <h1 className="text-4xl font-bold py-4"> Desserts</h1>
-        <main className="lg:grid grid-cols-12 gap-4 ">
-          {" "}
+      <div className="max-w-sm lg:max-w-7xl m-auto">
+        <h1 className="text-4xl font-bold py-4">Desserts</h1>
+        <main className="lg:grid grid-cols-12 gap-4">
           <div className="col-span-9">
-            {" "}
             <Products
-              handelclick={handelclick}
+              handleClick={handleClick}
               setCounter={setCounter}
               counter={counter}
               click={click}
-              handelRecide={handelRecide}
-              handelRecideprice={handelRecideprice}
+              handleRecide={handleRecide}
+              handleRecidePrice={handleRecidePrice}
             />
           </div>
-          <div className=" col-span-3">
-            {" "}
+          <div className="col-span-3">
             <Recide
               counter={counter}
               click={click}
               items={items}
               gotoR={gotoR}
               price={price}
-              handelmodal={handelmodal}
+              handleModal={handleModal}
               close={close}
-              handelclose={handelclose}
+              handleClose={handleClose}
             />
           </div>
         </main>
@@ -82,5 +78,4 @@ function App() {
     </div>
   );
 }
-
 export default App;

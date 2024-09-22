@@ -24,32 +24,29 @@ export default function Component({
             {" "}
             <div>
               <div>
-                {data
-                  .filter((item) => !close.includes(item.id))
-                  .map((item) => (
-                    <div key={item.id}>
-                      {click.includes(item.id) ? (
-                        <div className="border-b-2 my-4">
-                          <div>{gotoR[item.id]}</div>
-                          <div className="flex justify-between">
-                            <span>{counter[item.id]}</span>
-                            <span>${price[item.id]}</span>
-                            <button
-                              onClick={() => {
-                                handelclose(item.id);
-                              }}
-                            >
-                              <img
-                                src="../assets/images/icon-remove-item.svg"
-                                alt=""
-                              />
-                            </button>
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
-              </div>
+                <ul>
+                  {gotoR
+                    .filter((item) => !close.includes(item))
+                    .map((item, index) => (
+                      <li
+                        key={index}
+                        className="flex justify-between border-b-2 my-4"
+                      >
+                        <span className="text-red-700">
+                          {counter[index] + "x"}{" "}
+                        </span>
+                        <span>{item}</span>
+                        <span>{"$" + counter[index] * price[index]}</span>
+                        <button onClick={() => handelclose(index)}>
+                          <img
+                            src="../assets/images/icon-remove-item.svg"
+                            alt=""
+                          />
+                        </button>
+                      </li>
+                    ))}
+                </ul>
+              </div>{" "}
               <div>Order total: </div>
               <div className="bg-amber-50 p-3 rounded-2xl my-2 flex justify-center tracking-normal">
                 <img src="../assets/images/icon-carbon-neutral.svg" alt="" />

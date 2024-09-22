@@ -6,44 +6,44 @@ function Recide({
   items,
   gotoR,
   price,
-  handelmodal,
+  handleModal,
   close,
-  handelclose,
+  handleClose,
 }) {
   return (
     <div>
       <div className="bg-white rounded-3xl p-6">
         <h1 className="text-red-700">Your cart ({items})</h1>
+        {console.log(counter)}
 
         <div>
           {items ? (
             <div>
               <div>
-                {data
-                  .filter((item) => !close.includes(item.id))
-                  .map((item) => (
-                    <div key={item.id}>
-                      {click.includes(item.id) ? (
-                        <div className="border-b-2 my-4">
-                          <div>{gotoR[item.id]}</div>
-                          <div className="flex justify-between">
-                            <span>{counter[item.id]}</span>
-                            <span>${price[item.id]}</span>
-                            <button
-                              onClick={() => {
-                                handelclose(item.id);
-                              }}
-                            >
-                              <img
-                                src="../assets/images/icon-remove-item.svg"
-                                alt=""
-                              />
-                            </button>
-                          </div>
-                        </div>
-                      ) : null}
-                    </div>
-                  ))}
+                <ul>
+                  {gotoR
+                    .filter((item, index) => !close.includes(index))
+                    .map((item, index) => (
+                      <li
+                        key={index}
+                        className="flex justify-between border-b-2 my-4"
+                      >
+                        {console.log(counter[index])}
+
+                        <span className="text-red-700">
+                          {counter[index] + "x"}{" "}
+                        </span>
+                        <span>{item}</span>
+                        <span>{"$" + counter[index] * price[index]}</span>
+                        <button onClick={() => handleClose(index)}>
+                          <img
+                            src="../assets/images/icon-remove-item.svg"
+                            alt=""
+                          />
+                        </button>
+                      </li>
+                    ))}
+                </ul>
               </div>
               <div>Order total: </div>
               <div className="bg-amber-50 p-3 rounded-2xl my-2 flex justify-center tracking-normal">
@@ -52,7 +52,7 @@ function Recide({
               </div>
               <div className="flex justify-center items-center w-full">
                 <button
-                  onClick={handelmodal}
+                  onClick={handleModal}
                   className="bg-red-700 p-2 px-16 rounded-full text-white"
                 >
                   Confirm Order
